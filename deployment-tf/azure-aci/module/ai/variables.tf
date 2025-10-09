@@ -72,10 +72,10 @@ variable "file_share_quota_gb" {
   }
 }
 
-variable "log_analytics_workspace_name" {
-  description = "Name of the existing Log Analytics workspace"
-  type        = string
-  default     = "we-log-ws"
+variable "log_analytics_workspace" {
+  description = "Log Analytics workspace"
+  default     = "dummy"
+  sensitive   = true
 }
 
 variable "log_analytics_resource_group_name" {
@@ -159,3 +159,4 @@ variable "azure_cloud" {
   type        = string
   default     = "AzureCloud"
 }
+

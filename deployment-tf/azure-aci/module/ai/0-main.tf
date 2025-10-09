@@ -1,9 +1,3 @@
-# Data source for existing Log Analytics workspace
-data "azurerm_log_analytics_workspace" "workspace" {
-  name                = var.log_analytics_workspace_name
-  resource_group_name = var.log_analytics_resource_group_name
-}
-
 # Resource group for the container instance
 resource "azurerm_resource_group" "aci_rg" {
   name     = var.resource_group_name
@@ -45,7 +39,7 @@ resource "azurerm_storage_share" "pipeline" {
 resource "azurerm_storage_share_file" "logstash_conf" {
   name             = "logstash.conf"
   storage_share_id = azurerm_storage_share.pipeline.id
-  source           = "${path.module}/../../../logstash-configs/output_azure_log_ingestion_api/logstash_output_azure_lia.conf"
+  source           = "${path.module}/../../../../logstash-configs/output_azure_log_ingestion_api/logstash_output_azure_lia.conf"
   depends_on       = [azurerm_monitor_data_collection_endpoint.dce]
 }
 
@@ -53,7 +47,7 @@ resource "azurerm_storage_share_file" "logstash_conf" {
 resource "azurerm_storage_share_file" "avx_pattern" {
   name             = "avx.conf"
   storage_share_id = azurerm_storage_share.patterns.id
-  source           = "${path.module}/../../../logstash-configs/base_config/patterns/avx.conf"
+  source           = "${path.module}/../../../../logstash-configs/base_config/patterns/avx.conf"
 }
 
 # Container group with Logstash container
@@ -107,8 +101,8 @@ resource "azurerm_container_group" "logstash" {
 
   diagnostics {
     log_analytics {
-      workspace_id  = data.azurerm_log_analytics_workspace.workspace.workspace_id
-      workspace_key = data.azurerm_log_analytics_workspace.workspace.primary_shared_key
+      workspace_id  = var.log_analytics_workspace.workspace_id
+      workspace_key = var.log_analytics_workspace.primary_shared_key
     }
   }
 

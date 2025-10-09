@@ -2,29 +2,29 @@
 
 ## Data Collection Endpoint used as entry point for Data Collection Rules
 resource "azurerm_monitor_data_collection_endpoint" "dce" {
-  name                 = "avx-drc-${random_integer.suffix.result}"
-  location             = azurerm_resource_group.aci_rg.location
-  resource_group_name  = var.log_analytics_resource_group_name
+  name                = "avx-drc-${random_integer.suffix.result}"
+  location            = azurerm_resource_group.aci_rg.location
+  resource_group_name = azurerm_resource_group.aci_rg.name
 
 }
 
 ## Data Collection Rules for Aviatrix Firewall logs
 resource "azurerm_monitor_data_collection_rule" "aviatrix_microseg" {
-  name                 = "aviatrix-microseg-dcr"
-  location             = azurerm_resource_group.aci_rg.location
-  resource_group_name  = var.log_analytics_resource_group_name
+  name                        = "aviatrix-microseg-dcr"
+  location                    = azurerm_resource_group.aci_rg.location
+  resource_group_name         = azurerm_resource_group.aci_rg.name
   data_collection_endpoint_id = azurerm_monitor_data_collection_endpoint.dce.id
 
   data_flow {
-    streams      = ["Custom-AviatrixMicroseg_CL"]
-    destinations = ["loganalytics-destination"]
+    streams       = ["Custom-AviatrixMicroseg_CL"]
+    destinations  = ["loganalytics-destination"]
     output_stream = "Custom-AviatrixMicroseg_CL"
     transform_kql = "source"
   }
 
   destinations {
     log_analytics {
-      workspace_resource_id = data.azurerm_log_analytics_workspace.workspace.id
+      workspace_resource_id = var.log_analytics_workspace.id
       name                  = "loganalytics-destination"
     }
   }
@@ -92,21 +92,21 @@ resource "azurerm_monitor_data_collection_rule" "aviatrix_microseg" {
 
 ## Data Collection Rules for Aviatrix IDS logs
 resource "azurerm_monitor_data_collection_rule" "aviatrix_suricata" {
-  name                 = "aviatrix-suricata-dcr"
-  location             = azurerm_resource_group.aci_rg.location
-  resource_group_name  = var.log_analytics_resource_group_name
+  name                        = "aviatrix-suricata-dcr"
+  location                    = azurerm_resource_group.aci_rg.location
+  resource_group_name         = azurerm_resource_group.aci_rg.name
   data_collection_endpoint_id = azurerm_monitor_data_collection_endpoint.dce.id
 
   data_flow {
-    streams      = ["Custom-AviatrixSuricata_CL"]
-    destinations = ["loganalytics-destination"]
+    streams       = ["Custom-AviatrixSuricata_CL"]
+    destinations  = ["loganalytics-destination"]
     output_stream = "Custom-AviatrixSuricata_CL"
     transform_kql = "source"
   }
 
   destinations {
     log_analytics {
-      workspace_resource_id = data.azurerm_log_analytics_workspace.workspace.id
+      workspace_resource_id = var.log_analytics_workspace.id
       name                  = "loganalytics-destination"
     }
   }

@@ -159,3 +159,9 @@ variable "azure_cloud" {
   type        = string
   default     = "AzureChinaCloud"
 }
+
+variable "log_analytics_subscription_id" {
+  description = "Subscription ID for the Log Analytics workspace"
+  type        = string
+  default     = "dummy"
+}

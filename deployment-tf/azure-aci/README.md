@@ -28,7 +28,7 @@ It uses the Microsoft Log Ingestion API along with the Microsoft Sentinel Logsta
    - ```az cloud set --name AzureCloud``` to point az cli to public cloud
    - ```az cloud set --name AzureChinaCloud``` to point az cli to China cloud
 3. Terraform >= 1.0 installed  
-4. Existing Log Analytics workspace and resource group information  
+4. Existing Log Analytics workspace and resource group information. If your Log Analyics workspace lives in a different subscription, provide the subscription ID using the log_analytics_subscription_id parameter.
 5. Custom container containing Logstash and the Sentinel plugin (actual source here is supplied as **best effort**). You should build/use your own source. See the [README](./logstash-container-build/README.md) for instructions.  
 6. Log Analytics Custom Log tables for Microseg and Suricata logs. Use the two command lines provided below to create tables.  
 7. EntraID Service Principal: you can decide to use a pre-created Service Principal (default) or let the Terraform deployment create one for you.  

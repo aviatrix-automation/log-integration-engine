@@ -18,12 +18,13 @@ storage_account_name   = "yourstorageaccount"
 # Log Analytics Configuration
 log_analytics_workspace_name        = "your-log-analytics-workspace"
 log_analytics_resource_group_name   = "your-log-analytics-rg"
+# log_analytics_subscription_id     = "00000000-0000-0000-0000-000000000000" # Use "dummy" if Log Analytics is in the same subscription as the ACI deployment or comment out this line
 
 # If you use your own EntraID Service Principal, uncomment the below and insert appropriate value
 # client_app_id                  = "00000000-0000-0000-0000-000000000000"
 # client_app_secret                  = "fake-client-secret"
 # tenant_id                      = "00000000-0000-0000-0000-000000000000"
-# use_existing_spn                   = false
+# use_existing_spn                   = false # Remove comment and set value to false to let this deployment create a new SPN.
 
 # Tags
 tags = {
